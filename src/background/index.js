@@ -1,8 +1,27 @@
 import { sendMessage, onMessage } from 'webext-bridge'
 
+const CTX_MENU_ID = 'v-extension-show-selection'
+
 chrome.runtime.onInstalled.addListener(() => {
   // eslint-disable-next-line no-console
   console.log('Extension installed')
+
+  chrome.contextMenus.create({
+    id: CTX_MENU_ID,
+    title: '顯示選取文字',
+    contexts: ['selection']
+  })
+})
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  // eslint-disable-next-line no-console
+  console.log('[v-extension] ctx menu clicked', info.menuItemId, info.selectionText)
+  if (info.menuItemId !== CTX_MENU_ID || !tab?.id) return
+  sendMessage(
+    'show-selection',
+    { text: info.selectionText ?? '' },
+    { context: 'content-script', tabId: tab.id }
+  )
 })
 
 let previousTabId = 0
