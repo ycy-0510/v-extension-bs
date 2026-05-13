@@ -6,7 +6,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 
 const port = parseInt(process.env.PORT || '') || 3309
-const r = (...args: string[]) => resolve(__dirname, ...args)
+const r = (...args) => resolve(import.meta.dirname, ...args)
 
 export default defineConfig(({ command }) => {
   const isDev = command === 'serve'

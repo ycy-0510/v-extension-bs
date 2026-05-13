@@ -1,6 +1,6 @@
 import { sendMessage, onMessage } from 'webext-bridge'
 
-chrome.runtime.onInstalled.addListener((): void => {
+chrome.runtime.onInstalled.addListener(() => {
   // eslint-disable-next-line no-console
   console.log('Extension installed')
 })
@@ -8,7 +8,6 @@ chrome.runtime.onInstalled.addListener((): void => {
 let previousTabId = 0
 
 // communication example: send previous tab title from background page
-// see shim.d.ts for type decleration
 chrome.tabs.onActivated.addListener(async ({ tabId }) => {
   if (!previousTabId) {
     previousTabId = tabId

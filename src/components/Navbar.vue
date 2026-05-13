@@ -1,15 +1,19 @@
 <template>
-  <nav class="px-2 py-1.5 border-b flex items-center space-x-0.5 w-full">
-    <RouterLink to="/" class="nav-link">
+  <nav class="px-2 py-1 border-bottom d-flex align-items-center w-100 gap-1">
+    <RouterLink to="/" class="d-inline-flex align-items-center px-2 py-1 rounded text-decoration-none text-secondary" exact-active-class="bg-info-subtle text-info-emphasis">
       <HeroiconsHome />
-      <span class="ml-1">Home</span>
+      <span class="ms-1">Home</span>
     </RouterLink>
-    <RouterLink to="/settings" class="nav-link">
+    <RouterLink to="/todo" class="d-inline-flex align-items-center px-2 py-1 rounded text-decoration-none text-secondary" exact-active-class="bg-info-subtle text-info-emphasis">
+      <HeroiconsListBullet />
+      <span class="ms-1">Todo</span>
+    </RouterLink>
+    <RouterLink to="/settings" class="d-inline-flex align-items-center px-2 py-1 rounded text-decoration-none text-secondary" exact-active-class="bg-info-subtle text-info-emphasis">
       <HeroiconsCog6Tooth />
-      <span class="ml-1">Settings</span>
+      <span class="ms-1">Settings</span>
     </RouterLink>
-    <div class="flex-1"></div>
-    <RouterLink to="/about" class="nav-link">
+    <div class="flex-grow-1"></div>
+    <RouterLink to="/about" class="d-inline-flex align-items-center px-2 py-1 rounded text-decoration-none text-secondary" exact-active-class="bg-info-subtle text-info-emphasis">
       <HeroiconsUser />
     </RouterLink>
   </nav>
@@ -17,12 +21,3 @@
 <script setup>
 import { RouterLink } from "vue-router";
 </script>
-
-<style scoped>
-.nav-link {
-  @apply flex items-center p-1 rounded-md text-slate-500;
-}
-.router-link-exact-active {
-  @apply bg-indigo-50 text-indigo-600;
-}
-</style>

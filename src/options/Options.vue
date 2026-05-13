@@ -1,6 +1,6 @@
 <template>
-  <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
-    <carbon-settings class="icon-btn mx-2 text-2xl" />
+  <main class="px-4 py-5 text-center text-secondary">
+    <carbon-settings class="icon-btn mx-2 fs-3" />
     <div>Options</div>
     <p class="my-2 opacity-50">This is the options page</p>
 
@@ -9,18 +9,19 @@
       v-model="storageDemo"
       placeholder="Sync Storage Message"
       type="text"
-      class="px-4 py-2 w-[250px] rounded-lg text-center bg-transparent border border-gray-200 dark:border-gray-700 outline-none active:outline-none"
+      class="form-control text-center mx-auto bg-transparent"
+      style="width: 250px;"
     />
 
     <Footer />
 
-    <div class="mt-4 flex items-center space-x-2 justify-center">
-      <span> Powered By Vite </span>
-      <pixelarticons-zap class="inline-block" />
+    <div class="mt-4 d-flex align-items-center justify-content-center gap-2">
+      <span>Powered By Vite</span>
+      <pixelarticons-zap class="d-inline-block" />
     </div>
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { storageDemo } from "~/logic/storage";
 </script>
