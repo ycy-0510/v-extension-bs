@@ -14,8 +14,6 @@ chrome.runtime.onInstalled.addListener(() => {
 })
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  // eslint-disable-next-line no-console
-  console.log('[v-extension] ctx menu clicked', info.menuItemId, info.selectionText)
   if (info.menuItemId !== CTX_MENU_ID || !tab?.id) return
   sendMessage(
     'show-selection',
