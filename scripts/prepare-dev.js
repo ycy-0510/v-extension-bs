@@ -14,7 +14,7 @@ async function stubIndexHtml() {
     await fs.ensureDir(r(`extension/dev/${view}`))
     let data = await fs.readFile(r(`src/${view}/index.html`), 'utf-8')
     data = data
-      .replace('"./main.ts"', `"http://localhost:${PORT}/${view}/main.ts"`)
+      .replace('"./main.js"', `"http://localhost:${PORT}/${view}/main.js"`)
       .replace(
         '<div id="app"></div>',
         '<div id="app">Vite server did not start</div>'
@@ -25,7 +25,7 @@ async function stubIndexHtml() {
 }
 
 function writeManifest() {
-  execSync('npx esno ./scripts/manifest-dev.ts', { stdio: 'inherit' })
+  execSync('npx esno ./scripts/manifest-dev.js', { stdio: 'inherit' })
 }
 
 writeManifest()
@@ -35,7 +35,7 @@ if (IS_DEV) {
   chokidar.watch(r('src/**/*.html')).on('change', () => {
     stubIndexHtml()
   })
-  chokidar.watch([r('src/manifest.ts'), r('package.json')]).on('change', () => {
+  chokidar.watch([r('src/manifest.js'), r('package.json')]).on('change', () => {
     writeManifest()
   })
 }

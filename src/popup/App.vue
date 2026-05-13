@@ -1,7 +1,7 @@
 <template>
-  <main class="w-[400px]">
+  <main class="popup-root">
     <Navbar />
-    <div class="h-80 overflow-y-scroll">
+    <div class="popup-content overflow-y-auto">
       <RouterView />
     </div>
     <Footer />
@@ -10,3 +10,11 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 </script>
+<style scoped>
+.popup-root {
+  width: 400px;
+}
+.popup-content {
+  height: 20rem;
+}
+</style>

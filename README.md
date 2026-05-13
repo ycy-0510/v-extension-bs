@@ -1,8 +1,6 @@
-[<img src="https://essentials.supersaas.dev/supersaas-banner.png">](http://supersaas.dev?ref=github-vextension)
+# Modernized Chrome Extension Vite Starter (Vue 3 + Bootstrap 5)
 
-# Modernized Chrome Extension Vite Starter
-
-> A [Vite](https://vitejs.dev/) Powered `Modernized Chrome Extension Manifest V3` ([Chrome](https://developer.chrome.com/docs/extensions/mv3/getstarted/)) Starter Template.
+> A [Vite](https://vitejs.dev/) Powered `Modernized Chrome Extension Manifest V3` ([Chrome](https://developer.chrome.com/docs/extensions/mv3/getstarted/)) Starter Template, built with Vue 3 and Bootstrap 5.
 
 |  Page Type   |                                                             Light Mode                                                              |                                                             Dark Mode                                                              |
 | :----------: | :---------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
@@ -15,12 +13,11 @@
 - 🥝 Vue 3 - Composition API, [`<script setup>` syntax](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md) and more!
 - 💬 Effortless communications - powered by [`webext-bridge`](https://github.com/antfu/webext-bridge) and [VueUse](https://github.com/antfu/vueuse) storage
 - 🧭 Vue Router support - Navigation to pages
-- 🍃 [Tailwind CSS](https://tailwindcss.com/) - on-demand CSS utilities
-- 🦾 [TypeScript](https://www.typescriptlang.org/) - type safe
+- 🅱️ [Bootstrap 5](https://getbootstrap.com/) - bundled locally (no CDN), full utility & component library
 - 📦 [Components auto importing](./src/components)
 - 🌟 [Icons](./src/components) - Access to icons from any iconset directly
 - 🌛 Dark Mode - support toggle dark mode
-- 📃 Dynamic `manifest.json` with full type support
+- 📃 Dynamic `manifest.json`
 
 ## Pre-packed
 
@@ -40,7 +37,7 @@
 
 ### UI Frameworks
 
-- [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - A utility-first CSS framework for rapid UI development.
+- [Bootstrap 5](https://github.com/twbs/bootstrap) - The world's most popular CSS framework. Imported from `node_modules` (no CDN), JS bundle includes Popper for dropdowns/modals/tooltips.
 
 ### Icons
 
@@ -54,43 +51,30 @@
 
 ### Dev tools
 
-- [TypeScript](https://www.typescriptlang.org/)
-- [pnpm](https://pnpm.js.org/) - fast, disk space efficient package manager
-- [tsup](https://github.com/egoist/tsup) - Zero config TypeScript bundler powered by esbuild
-- [esno](https://github.com/antfu/esno) - TypeScript / ESNext node runtime powered by esbuild
+- [Yarn](https://yarnpkg.com/) - package manager
+- [tsup](https://github.com/egoist/tsup) - Zero config bundler powered by esbuild
+- [esno](https://github.com/antfu/esno) - ESNext node runtime powered by esbuild
 - [npm-run-all](https://github.com/mysticatea/npm-run-all) - Run multiple npm-scripts in parallel or sequential
 
 ## Use the Template
 
 ### GitHub Template
 
-[Create a repo from this template on GitHub](https://github.com/xiaoluoboding/chrome-ext-mv3-starter/generate).
-
-### Clone to local
-
-If you prefer to do it manually with the cleaner git history
-
-> If you don't have pnpm installed, run: npm install -g pnpm
-
-```bash
-npx degit xiaoluoboding/chrome-ext-mv3-starter my-extension
-cd my-extension
-pnpm i
-```
+[Create a repo from this template on GitHub](https://github.com/ycy-0510/v-extension-bs/generate).
 
 ## Usage
 
 ### Folders
 
 - `src` - background scripts and content scripts & frontend for the extension (popup and options).
-  - `manifest.ts` - manifest for the extension.
+  - `manifest.js` - manifest for the extension.
 - `extension` - extension package root, also holds assets.
 - `scripts` - development helper scripts.
 
 ### Development
 
 ```bash
-pnpm dev
+yarn dev
 ```
 
 Then **load extension in browser with the `extension/` folder**,
@@ -100,16 +84,16 @@ Then **load extension in browser with the `extension/` folder**,
 To build the extension, run
 
 ```bash
-pnpm build
+yarn build
 ```
 
 And then pack files under `extension`.
 
 ## Credits
 
-This is a template derived from [antfu/vitesse-webext](https://github.com/antfu/vitesse-webext) and [xiaoluoboding/chrome-ext-mv3-starter](https://github.com/xiaoluoboding/chrome-ext-mv3-starter)
+This is a template derived from [antfu/vitesse-webext](https://github.com/antfu/vitesse-webext) and [xiaoluoboding/chrome-ext-mv3-starter](https://github.com/xiaoluoboding/chrome-ext-mv3-starter). Forked and migrated to Bootstrap 5 by [@ycy-0510](https://github.com/ycy-0510).
 
 
 ## License
 
-[MIT](./LICENSE) - [@xiaoluoboding](https://github.com/xiaoluoboding)
+[MIT](./LICENSE) - [@xiaoluoboding](https://github.com/xiaoluoboding), [@ycy-0510](https://github.com/ycy-0510)

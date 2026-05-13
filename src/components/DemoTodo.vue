@@ -1,42 +1,41 @@
 <template>
-  <div class="">
-    <div class="p-2 sticky top-0 bg-white/50 backdrop-blur z-50">
+  <div>
+    <div class="p-2 sticky-top bg-white bg-opacity-50 z-3">
       <input
         type="text"
         name="todo"
         id="todo"
-        class="block w-full rounded-md border-0 py-1.5 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        class="form-control form-control-sm"
         placeholder="Add new todo"
         v-model="newTodo"
         @keyup.enter="addNewTodo"
       />
     </div>
-    <div class="divide-y divide-gray-200 border-gray-200">
+    <div class="list-group list-group-flush">
       <label
         v-for="(todo, i) in todos"
         :key="i"
-        class="relative flex items-start p-2 cursor-pointer hover:bg-slate-100 focus-within:bg-slate-100"
+        class="list-group-item d-flex align-items-start p-2"
         :for="`todo-${todo.id}`"
+        style="cursor: pointer;"
       >
-        <div class="flex h-6 items-center">
-          <input
-            :id="`todo-${todo.id}`"
-            :name="`todo-${todo.id}`"
-            type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-            :checked="todo.completed"
-            v-model="todo.completed"
-          />
-        </div>
+        <input
+          :id="`todo-${todo.id}`"
+          :name="`todo-${todo.id}`"
+          type="checkbox"
+          class="form-check-input mt-1 me-2"
+          :checked="todo.completed"
+          v-model="todo.completed"
+        />
         <div
-          class="min-w-0 ml-3 flex-1 text-sm text-slate-600 leading-6"
-          :class="todo.completed ? 'line-through text-slate-400' : null"
+          class="flex-grow-1 small text-secondary"
+          :class="todo.completed ? 'text-decoration-line-through text-muted' : null"
         >
-          <p class="select-none">{{ todo.name }}</p>
+          <p class="mb-0 user-select-none">{{ todo.name }}</p>
         </div>
       </label>
     </div>
-    <p class="text-xs px-2 pb-2 text-slate-400 text-center">This is a demo</p>
+    <p class="small text-center text-muted px-2 pb-2 mb-0">This is a demo</p>
   </div>
 </template>
 <script setup>

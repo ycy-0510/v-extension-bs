@@ -10,6 +10,11 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/todo',
+      name: 'todo',
+      component: () => import('../pages/Todo.vue')
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('../pages/Settings.vue')
