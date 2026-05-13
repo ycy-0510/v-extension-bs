@@ -12,6 +12,9 @@ const emit = defineEmits(['close'])
 const wrap = ref(null)
 const top = ref(0)
 const left = ref(0)
+// Keep hidden (but laid out, so getBoundingClientRect works) until placed,
+// otherwise the card flashes at (0,0) before the first layout pass.
+const placed = ref(false)
 
 function place() {
   if (!wrap.value) return
@@ -35,6 +38,7 @@ function place() {
   // viewport -> document so the card follows page scroll
   top.value = vpTop + window.scrollY
   left.value = vpLeft + window.scrollX
+  placed.value = true
 }
 
 function onOutside(e) {
@@ -47,10 +51,12 @@ function onOutside(e) {
 onMounted(() => {
   place()
   document.addEventListener('mousedown', onOutside, true)
+  window.addEventListener('resize', place)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', onOutside, true)
+  window.removeEventListener('resize', place)
 })
 </script>
 
@@ -58,7 +64,13 @@ onBeforeUnmount(() => {
   <div
     ref="wrap"
     class="position-absolute"
-    :style="{ top: `${top}px`, left: `${left}px`, zIndex: 2147483647, maxWidth: '320px' }"
+    :style="{
+      top: `${top}px`,
+      left: `${left}px`,
+      zIndex: 2147483647,
+      maxWidth: '320px',
+      visibility: placed ? 'visible' : 'hidden'
+    }"
   >
     <div class="card shadow-sm border-0">
       <div class="card-header d-flex align-items-center justify-content-between py-2 px-3 bg-light">

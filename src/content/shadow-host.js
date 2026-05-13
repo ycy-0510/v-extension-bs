@@ -5,21 +5,52 @@ import bootstrapCss from 'bootstrap/dist/css/bootstrap.min.css'
 
 // Bootstrap defines CSS vars on :root, which won't match inside a Shadow Root.
 // Rewrite to :host so Bootstrap classes work when injected into shadow.
+// Caveats:
+//   - Bootstrap 5.3+ dark mode uses [data-bs-theme="dark"], not :root, so dark
+//     mode will not activate inside the shadow.
+//   - Naive regex: nested forms like :not(:root) would also be rewritten.
+//     Bootstrap doesn't use any today, but watch for this on upgrade.
 const scopedBootstrapCss = bootstrapCss.replace(/:root\b/g, ':host')
 
-function injectStyles(shadow, extraCss = '') {
-  const css = scopedBootstrapCss + (extraCss ? `\n${extraCss}` : '')
+// Constructable stylesheets can be shared across multiple shadow roots, so we
+// parse the ~160KB Bootstrap CSS once at module load instead of on every mount.
+let cachedSheet
+let cacheTried = false
+function getBootstrapSheet() {
+  if (cacheTried) return cachedSheet
+  cacheTried = true
   try {
     const sheet = new CSSStyleSheet()
-    sheet.replaceSync(css)
-    shadow.adoptedStyleSheets = [sheet]
+    sheet.replaceSync(scopedBootstrapCss)
+    cachedSheet = sheet
   } catch {
-    // Fallback for browsers without constructable stylesheets
-    const style = document.createElement('style')
-    style.textContent = css
-    shadow.appendChild(style)
+    cachedSheet = null
   }
+  return cachedSheet
 }
+
+function injectStyles(shadow, extraCss) {
+  const base = getBootstrapSheet()
+  if (base) {
+    const sheets = [base]
+    if (extraCss) {
+      const extra = new CSSStyleSheet()
+      extra.replaceSync(extraCss)
+      sheets.push(extra)
+    }
+    shadow.adoptedStyleSheets = sheets
+    return
+  }
+  // Browsers without constructable stylesheets.
+  const style = document.createElement('style')
+  style.textContent = scopedBootstrapCss + (extraCss ? `\n${extraCss}` : '')
+  shadow.appendChild(style)
+}
+
+// Track live instances by id so re-mounting with the same id fully unmounts
+// the previous Vue app (releases reactive scopes and runs onBeforeUnmount),
+// not just removes the host node.
+const instances = new Map()
 
 /**
  * Mount a Vue component inside a Shadow DOM attached to <body>.
@@ -32,7 +63,7 @@ function injectStyles(shadow, extraCss = '') {
  * @returns {{ unmount: () => void }}
  */
 export function mountShadowApp({ id, component, props = {}, extraCss = '' }) {
-  document.getElementById(id)?.remove()
+  instances.get(id)?.unmount()
 
   const host = document.createElement('div')
   host.id = id
@@ -46,10 +77,13 @@ export function mountShadowApp({ id, component, props = {}, extraCss = '' }) {
   const app = createApp(component, props)
   app.mount(mountPoint)
 
-  return {
+  const handle = {
     unmount() {
       app.unmount()
       host.remove()
+      if (instances.get(id) === handle) instances.delete(id)
     }
   }
+  instances.set(id, handle)
+  return handle
 }
